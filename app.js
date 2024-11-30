@@ -5,33 +5,34 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
-// Middleware
+// Middleware: Parse request bodies and serve static files
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// Custom Middleware: Logger
+// Custom Middleware: Logger to log request details
 app.use((req, res, next) => {
 	console.log(`${req.method} request to ${req.url}`);
 	next();
 });
 
-// In-memory data storage
+// In-memory storage for tasks
 let tasks = [
 	{
 		id: 1,
 		title: "Sample Task",
-		description: "This is a task.",
+		description: "This is a sample task.",
 		status: "Pending",
 		dueDate: "2024-12-01",
 	},
 ];
 
-// Routes
+// Home route
 app.get("/", (req, res) => {
-	res.render("index", { tasks });
+	res.render("index", { tasks }); // Render tasks on homepage
 });
 
 // API Routes
+// GET: Retrieve all tasks or filter by status
 app.get("/tasks", (req, res) => {
 	const { status } = req.query;
 	const filteredTasks = status
@@ -40,6 +41,12 @@ app.get("/tasks", (req, res) => {
 	res.json(filteredTasks);
 });
 
+// Route to render the Add Task form
+app.get("/tasks/add", (req, res) => {
+	res.render("add-task"); // Renders the add-task.ejs file
+});
+
+// POST: Add a new task
 app.post("/tasks", (req, res) => {
 	const { title, description, status, dueDate } = req.body;
 	const newTask = { id: tasks.length + 1, title, description, status, dueDate };
@@ -47,6 +54,7 @@ app.post("/tasks", (req, res) => {
 	res.redirect("/");
 });
 
+// PUT: Update an existing task
 app.put("/tasks/:id", (req, res) => {
 	const { id } = req.params;
 	const { title, description, status, dueDate } = req.body;
@@ -62,6 +70,7 @@ app.put("/tasks/:id", (req, res) => {
 	}
 });
 
+// DELETE: Delete a task
 app.delete("/tasks/:id", (req, res) => {
 	const { id } = req.params;
 	tasks = tasks.filter((task) => task.id !== parseInt(id));
