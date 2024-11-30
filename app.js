@@ -9,6 +9,21 @@ const PORT = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
+// Custom middleware: Validation for task creation and update
+function validateTask(req, res, next) {
+	const { title, dueDate } = req.body; // Extract required fields
+	if (!title || !dueDate) {
+		return res.status(400).send("Title and Due Date are required.");
+	}
+	next(); // Proceed to the next middleware or route
+}
+
+// Customer middleware: Logger
+app.use((req, res, next) => {
+	const now = new Date();
+	console.log(`[${now.toISOString()}] ${req.method} request to ${req.url}`);
+	next(); // Pass control to the next middleware/route
+});
 // Custom Middleware: Logger to log request details
 app.use((req, res, next) => {
 	console.log(`${req.method} request to ${req.url}`);
@@ -46,16 +61,16 @@ app.get("/tasks/add", (req, res) => {
 	res.render("add-task"); // Renders the add-task.ejs file
 });
 
-// POST: Add a new task
-app.post("/tasks", (req, res) => {
+// POST route for creating a new task
+app.post("/tasks", validateTask, (req, res) => {
 	const { title, description, status, dueDate } = req.body;
 	const newTask = { id: tasks.length + 1, title, description, status, dueDate };
 	tasks.push(newTask);
 	res.redirect("/");
 });
 
-// PUT: Update an existing task
-app.put("/tasks/:id", (req, res) => {
+// PUT route for updating an existing task
+app.put("/tasks/:id", validateTask, (req, res) => {
 	const { id } = req.params;
 	const { title, description, status, dueDate } = req.body;
 	const task = tasks.find((task) => task.id === parseInt(id));
@@ -77,10 +92,10 @@ app.delete("/tasks/:id", (req, res) => {
 	res.json({ message: "Task deleted" });
 });
 
-// Error Handling Middleware
+// Error-handling middleware
 app.use((err, req, res, next) => {
-	console.error(err.stack);
-	res.status(500).send("Something went wrong!");
+	console.error(err.stack); // Log the error stack for debugging
+	res.status(500).send("Something went wrong! Please try again later.");
 });
 
 // View Engine Setup
