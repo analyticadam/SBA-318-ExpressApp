@@ -22,8 +22,7 @@ let tasks = [
 
 // Routes
 app.get('/', (req, res) => {
-    res.render(`indexx`, { tasks };)
-});
+    res.render('index', { tasks });
 
 // API Routes
 app.get(`/tasks`, (req, res) => {
