@@ -17,7 +17,7 @@ app.use((req, res, next)=> {
 
 // In-memory data storage
 let tasks = [
-    { id: 1, title: "Sample Task", description: "This is a task.", status: "Pending", dueDate: "2024-12-01" }}
+    { id: 1, title: "Sample Task", description: "This is a task.", status: "Pending", dueDate: "2024-12-01" }
 ];
 
 // Routes
