@@ -10,6 +10,17 @@ const tasks = require("./data/tasks");
 const users = require("./data/users");
 const categories = require("./data/categories");
 
+// Helper function to save data to a file
+const fs = require("fs");
+const path = require("path");
+
+function saveData(filePath, data) {
+	fs.writeFileSync(
+		path.join(__dirname, "data", filePath),
+		`const data = ${JSON.stringify(data, null, 4)};\n\nmodule.exports = data;`
+	);
+}
+
 // Middleware: Parse request bodies and serve static files
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -95,6 +106,8 @@ app.post("/tasks", validateTask, (req, res) => {
 	const { title, description, status, dueDate } = req.body;
 	const newTask = { id: tasks.length + 1, title, description, status, dueDate };
 	tasks.push(newTask);
+	// Save the updated tasks array to the file
+	saveData("tasks.js", tasks);
 	res.redirect("/");
 });
 
@@ -108,6 +121,8 @@ app.put("/tasks/:id", validateTask, (req, res) => {
 		task.description = description || task.description;
 		task.status = status || task.status;
 		task.dueDate = dueDate || task.dueDate;
+		// Save the updated tasks array to the file
+		saveData("tasks.js", tasks);
 		res.json(task);
 	} else {
 		res.status(404).send("Task not found");
@@ -117,8 +132,15 @@ app.put("/tasks/:id", validateTask, (req, res) => {
 // DELETE: Delete a task
 app.delete("/tasks/:id", (req, res) => {
 	const { id } = req.params;
+
+	// Filter out the task with the specified ID
 	tasks = tasks.filter((task) => task.id !== parseInt(id));
-	res.json({ message: "Task deleted" });
+
+	// Save the updated tasks array to the file
+	saveData("tasks.js", tasks);
+
+	// Respond with a success message
+	res.json({ message: "Task deleted successfully" });
 });
 
 // Error-handling middleware
