@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
+const methodOverride = require("method-override"); // Import method-override
 
 const app = express();
 const PORT = 3000;
@@ -25,6 +26,7 @@ function saveData(filePath, data) {
 }
 
 // Middleware: Parse request bodies and serve static files
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -136,6 +138,21 @@ app.get("/tasks/:id", (req, res) => {
 	}
 });
 
+// Route: Render the Edit Task page
+// This route displays the form for editing a specific task
+app.get("/tasks/:id/edit", (req, res) => {
+	// Find the task in the tasks array by matching the provided ID
+	const task = tasks.find((task) => task.id === req.params.id);
+
+	if (task) {
+		// If the task is found, render the 'edit-task.ejs' template and pass the task data
+		res.render("edit-task", { task });
+	} else {
+		// If no task is found, respond with a 404 status and an error message
+		res.status(404).send("Task not found");
+	}
+});
+
 // POST: Create a new task
 // Validates input using validateTask middleware before processing
 app.post("/tasks", validateTask, (req, res) => {
@@ -151,34 +168,45 @@ app.post("/tasks", validateTask, (req, res) => {
 	// Save the updated tasks array to the file for persistence
 	saveData("tasks.js", tasks);
 
-	// Redirect the user to the homepage after successfully adding the task
-	res.redirect("/");
+	// // Redirect the user to the homepage after successfully adding the task
+	// res.redirect("/");
+
+	// Respond with a success message and the new task
+	res.status(201).json({ message: "Task created successfully", task: newTask });
 });
 
 // PUT: Update an existing task by ID
-// Validates input using validateTask middleware before processing
+// This route updates a specific task in the tasks array based on the provided ID
 app.put("/tasks/:id", validateTask, (req, res) => {
-	const { id } = req.params; // Extract task ID from the route parameter
-	const { title, description, status, dueDate } = req.body; // Extract updated details from the request body
+	const { id } = req.params; // Extract the task ID from the route parameter
+	const { title, description, status, dueDate } = req.body; // Extract the updated task fields from the request body
 
-	// Find the task with the matching ID
+	// Find the task with the matching ID in the tasks array
 	const task = tasks.find((task) => task.id === id);
 
 	if (task) {
-		// Update the task fields if new values are provided, otherwise keep the old values
-		task.title = title || task.title;
-		task.description = description || task.description;
-		task.status = status || task.status;
-		task.dueDate = dueDate || task.dueDate;
+		// Update the task fields only if new values are provided, otherwise keep the existing values
+		task.title = title || task.title; // Update title if provided, else keep the current title
+		task.description = description || task.description; // Update description if provided
+		task.status = status || task.status; // Update status if provided
+		task.dueDate = dueDate || task.dueDate; // Update due date if provided
 
-		// Save the updated tasks array to the file for persistence
+		// Persist the updated tasks array to the tasks.js file
+		// This ensures changes are saved for future use
 		saveData("tasks.js", tasks);
 
-		// Respond with the updated task details
-		res.json(task);
+		console.log(`[TASK UPDATED] ID: ${id} - Title: ${task.title}`);
+
+		// Respond with the updated task object
+		res.json({
+			message: "Task updated successfully",
+			task,
+		});
 	} else {
-		// If no task is found with the provided ID, respond with a 404 error
-		res.status(404).send("Task not found");
+		// If no task with the specified ID is found, respond with a 404 error
+		res.status(404).json({
+			error: `Task with ID ${id} not found.`,
+		});
 	}
 });
 
@@ -187,15 +215,20 @@ app.delete("/tasks/:id", (req, res) => {
 	const { id } = req.params; // Extract task ID from the route parameter
 
 	// Filter the tasks array to exclude the task with the specified ID
-	// This creates a new array with all tasks except the one to be deleted
 	const updatedTasks = tasks.filter((task) => task.id !== id);
 
+	tasks = updatedTasks; // Update the in-memory tasks array
+
 	// Persist the updated tasks array to the tasks.js file
-	// This ensures the deletion is saved for future use
 	saveData("tasks.js", updatedTasks);
 
 	// Respond with a success message after deletion
 	res.json({ message: "Task deleted successfully" });
+});
+
+// Handle undefined routes with a 404 error
+app.use((req, res) => {
+	res.status(404).send("Page Not Found");
 });
 
 // Handle server errors

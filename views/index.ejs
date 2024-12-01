@@ -11,7 +11,11 @@
 		<a href="/tasks/add">Add Task</a>
 		<ul>
 			<% tasks.forEach(task => { %>
-			<li><strong><%= task.title %></strong> - <%= task.status %></li>
+			<li>
+				<strong><%= task.title %></strong> - <%= task.status %>
+				<a href="/tasks/<%= task.id %>/edit">Edit</a>
+				<!-- Edit link -->
+			</li>
 			<% }) %>
 		</ul>
 	</body>

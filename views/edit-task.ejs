@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+</head>
+<body>
+    <!-- Page Title -->
+    <h1>Edit Task</h1>
+<!--  Display error messages if server-side validation fails:--> 
+    <% if (error) { %>
+        <p style="color: red;"><%= error %></p>
+    <% } %>    
+
+    <!-- Form for editing a task -->
+    <form action="/tasks/<%= task.id %>?_method=PUT" method="POST">
+        <!-- Task Title -->
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" value="<%= task.title %>" required minlength="3" maxlength="100" />
+        <br>
+
+        <!-- Task Description -->
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required><%= task.description %></textarea>
+        <br>
+
+        <!-- Task Status -->
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <!-- The `selected` attribute ensures the current status is pre-selected -->
+            <option value="Pending" <%= task.status === "Pending" ? "selected" : "" %>>Pending</option>
+            <option value="Completed" <%= task.status === "Completed" ? "selected" : "" %>>Completed</option>
+        </select>
+        <br>
+
+        <!-- Task Due Date -->
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" name="dueDate" value="<%= task.dueDate %>" required />
+        <br>
+
+        <!-- Submit Button -->
+        <button type="submit">Save Changes</button>
+        <a href="/">Cancel</a>
+    </form>
+
+    <!-- Link to go back to the homepage -->
+    <a href="/">Back to Task List</a>
+</body>
+</html>
