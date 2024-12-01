@@ -5,6 +5,11 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
+// Import data
+const tasks = require("./data/tasks");
+const users = require("./data/users");
+const categories = require("./data/categories");
+
 // Middleware: Parse request bodies and serve static files
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -30,30 +35,54 @@ app.use((req, res, next) => {
 	next();
 });
 
-// In-memory storage for tasks
-let tasks = [
-	{
-		id: 1,
-		title: "Sample Task",
-		description: "This is a sample task.",
-		status: "Pending",
-		dueDate: "2024-12-01",
-	},
-];
-
 // Home route
 app.get("/", (req, res) => {
 	res.render("index", { tasks }); // Render tasks on homepage
 });
 
 // API Routes
-// GET: Retrieve all tasks or filter by status
+// GET: Retrieve all tasks or filter by status and/or due date
 app.get("/tasks", (req, res) => {
-	const { status } = req.query;
-	const filteredTasks = status
-		? tasks.filter((task) => task.status === status)
-		: tasks;
+	const { status, dueDate } = req.query;
+	// Start with the full list of tasks
+	let filteredTasks = tasks;
+
+	// Filter by status if provided
+	if (status) {
+		filteredTasks = filteredTasks.filter((task) => task.status === status);
+	}
+
+	// Filter by due date if provided
+	if (dueDate) {
+		filteredTasks = filteredTasks.filter((task) => task.dueDate === dueDate);
+	}
+
+	// Return filtered results as JSON
 	res.json(filteredTasks);
+});
+
+// GET: Retrieve all users
+// This route returns a JSON array of all users in the system.
+app.get("/users", (req, res) => {
+	// Respond with the users array as JSON
+	res.json(users);
+});
+
+// GET: Retrieve all categories
+// This route returns a JSON array of all task categories in the system.
+app.get("/categories", (req, res) => {
+	// Respond with the categories array as JSON
+	res.json(categories);
+});
+
+// GET: Fetch details of a specific task by ID
+app.get("/tasks/:id", (req, res) => {
+	const task = tasks.find((t) => t.id === parseInt(req.params.id)); // Find task by ID
+	if (task) {
+		res.render("task-detail", { task }); // Render a new EJS template for task details
+	} else {
+		res.status(404).send("Task not found"); // Respond with 404 if task doesn't exist
+	}
 });
 
 // Route to render the Add Task form
