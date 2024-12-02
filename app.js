@@ -110,6 +110,34 @@ app.post("/tasks", (req, res) => {
 	res.status(201).json({ message: "Task created successfully", task: newTask });
 });
 
+// PUT: Update an existing task by ID
+app.put("/tasks/:id", (req, res) => {
+	console.log("PUT /tasks/:id called with ID:", req.params.id); // Log the request
+
+	const { id } = req.params; // Extract task ID from the URL
+	const { title, description, status, dueDate } = req.body; // Extract fields to update
+
+	// Find the task to update
+	const task = tasks.find((task) => task.id == id);
+
+	if (task) {
+		// Update fields if provided
+		task.title = title || task.title;
+		task.description = description || task.description;
+		task.status = status || task.status;
+		task.dueDate = dueDate || task.dueDate;
+
+		// Persist changes
+		saveData("tasks.js", tasks);
+
+		console.log("Task updated:", task); // Log updated task
+		res.json({ message: "Task updated successfully", task });
+	} else {
+		console.log(`Task with ID ${id} not found.`); // Log missing task
+		res.status(404).json({ error: `Task with ID ${id} not found.` });
+	}
+});
+
 // DELETE: Delete a task by ID
 app.delete("/tasks/:id", (req, res) => {
 	console.log("DELETE /tasks/:id called with ID:", req.params.id); // Log route call

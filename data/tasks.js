@@ -15,10 +15,10 @@ module.exports = [
     },
     {
         "id": "397e06a6-ef77-4dd5-8fc4-08ce0ce499c3",
-        "title": "New Task",
-        "description": "This is a test task",
-        "status": "Pending",
-        "dueDate": "2024-12-01"
+        "title": "Updated Title",
+        "description": "Updated Description",
+        "status": "Completed",
+        "dueDate": "2024-12-15"
     },
     {
         "id": "a6aac944-07cb-4a72-90b8-54bf530335ae",
@@ -54,5 +54,12 @@ module.exports = [
         "description": "Clean and pick up office and organize",
         "status": "Pending",
         "dueDate": "2024-12-06"
+    },
+    {
+        "id": "18c87544-8d68-4afe-af90-a7856c37d254",
+        "title": "Finish SBA 318",
+        "description": "Finish SBA 318",
+        "status": "Pending",
+        "dueDate": "2024-12-01"
     }
 ];
