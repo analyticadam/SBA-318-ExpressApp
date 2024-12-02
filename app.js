@@ -48,6 +48,7 @@ function saveData(filePath, data) {
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(methodOverride("_method")); // Enable method override for PUT and DELETE
 
 // View Engine Setup
 app.set("view engine", "ejs");
@@ -138,6 +139,19 @@ app.put("/tasks/:id", (req, res) => {
 	}
 });
 
+// Route to render the Edit Task page
+app.get("/tasks/:id/edit", (req, res) => {
+	console.log("GET /tasks/:id/edit called with ID:", req.params.id); // Log the route call
+	const task = tasks.find((task) => task.id == req.params.id); // Find the task with the matching ID
+
+	if (task) {
+		res.render("edit-task", { task, error: null }); // Pass task data and error as null
+	} else {
+		console.log(`Task with ID ${req.params.id} not found.`); // Log if no task is found
+		res.status(404).send("Task not found");
+	}
+});
+
 // DELETE: Delete a task by ID
 app.delete("/tasks/:id", (req, res) => {
 	console.log("DELETE /tasks/:id called with ID:", req.params.id); // Log route call
@@ -151,10 +165,10 @@ app.delete("/tasks/:id", (req, res) => {
 		tasks = updatedTasks; // Update the in-memory tasks array
 		saveData("tasks.js", tasks); // Save the updated tasks array to tasks.js
 		console.log(`Task with ID ${id} deleted.`); // Log success
-		res.json({ message: "Task deleted successfully" }); // Respond with success
+		res.redirect("/"); // Redirect to the homepage after deletion
 	} else {
 		console.log(`Task with ID ${id} not found.`); // Log failure
-		res.status(404).json({ error: `Task with ID ${id} not found.` }); // Respond with error
+		res.status(404).send("Task not found");
 	}
 });
 

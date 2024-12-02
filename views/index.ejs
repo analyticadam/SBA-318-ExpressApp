@@ -3,20 +3,65 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="..//public/styles.css" />
+		<!-- Bootstrap CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRUPNfO9kV+2cxrN2D7K9hG8GA5r3ERLPB8N1LlA"
+			crossorigin="anonymous"
+		/>
+		<!-- Custom Styles -->
+		<link rel="stylesheet" href="/public/styles.css" />
 		<title>Task Manager</title>
 	</head>
-	<body>
-		<h1>Task Manager</h1>
-		<a href="/tasks/add">Add Task</a>
-		<ul>
-			<% tasks.forEach(task => { %>
-			<li>
-				<strong><%= task.title %></strong> - <%= task.status %>
-				<a href="/tasks/<%= task.id %>/edit">Edit</a>
-				<!-- Edit link -->
-			</li>
-			<% }) %>
-		</ul>
+	<body class="bg-light">
+		<!-- Page Header -->
+		<div class="container my-4">
+			<h1 class="text-center">Task Manager</h1>
+			<div class="text-center">
+				<!-- Link to Add Task Page -->
+				<a href="/tasks/add" class="btn btn-primary">Add Task</a>
+			</div>
+		</div>
+
+		<!-- Task List -->
+		<div class="container">
+			<ul class="list-group">
+				<% tasks.forEach(task => { %>
+				<li
+					class="list-group-item d-flex justify-content-between align-items-center"
+				>
+					<div>
+						<!-- Task Title and Status -->
+						<strong><%= task.title %></strong> - <%= task.status %>
+					</div>
+					<div>
+						<!-- Edit Task Link -->
+						<a href="/tasks/<%= task.id %>/edit" class="btn btn-sm btn-warning"
+							>Edit</a
+						>
+
+						<!-- Delete Task Form -->
+						<form
+							action="/tasks/<%= task.id %>?_method=DELETE"
+							method="POST"
+							class="d-inline"
+						>
+							<button type="submit" class="btn btn-sm btn-danger">
+								Delete
+							</button>
+						</form>
+					</div>
+				</li>
+				<% }) %>
+			</ul>
+		</div>
+
+		<!-- Bootstrap JavaScript (Optional, for interactive components) -->
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-w76AhrC0tqD1Qo7H9kRwjbZK6gBRgFGz7hFxg6XZ4emvACpHlkk6jCWvzp+8K8c1"
+			crossorigin="anonymous"
+		></script>
 	</body>
 </html>

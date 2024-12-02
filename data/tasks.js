@@ -2,7 +2,7 @@ module.exports = [
     {
         "id": 1,
         "title": "Sample Task",
-        "description": "This is a sample task.",
+        "description": "This is a sample sample task.",
         "status": "Pending",
         "dueDate": "2024-12-01"
     },
@@ -33,13 +33,6 @@ module.exports = [
         "description": "Wash dirty clothes",
         "status": "Pending",
         "dueDate": "2024-12-06"
-    },
-    {
-        "id": "cbc570e3-6b7a-4376-a18c-22f17c56035e",
-        "title": "Study for next module",
-        "description": "Study for MongoDB",
-        "status": "Pending",
-        "dueDate": "2024-12-02"
     },
     {
         "id": "f28d07e4-5547-4be4-8f7d-a38e9b950335",
