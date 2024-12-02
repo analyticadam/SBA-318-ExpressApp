@@ -13,17 +13,31 @@
 		<title>Task Manager</title>
 	</head>
 	<body>
-		<div class="container">
-			<h1>Task Manager</h1>
+		<div class="container mt-4">
+			<!-- Page Title -->
+			<h1 class="text-primary text-center mb-4">Task Manager</h1>
+
 			<!-- Add Task Button -->
-			<a href="/tasks/add" class="btn btn-primary add-task-btn">Add Task</a>
+			<div class="text-center mb-4">
+				<a href="/tasks/add" class="btn btn-primary btn-lg add-task-btn"
+					>Add Task</a
+				>
+			</div>
+
 			<!-- Task List -->
 			<ul class="list-group">
-				<% tasks.forEach(task => { %>
-				<li class="list-group-item">
-					<span><strong><%= task.title %></strong></span>
+				<% tasks.forEach((task) => { %>
+				<li
+					class="list-group-item d-flex justify-content-between align-items-center"
+				>
 					<div>
-						<a href="/tasks/<%= task.id %>/edit" class="btn btn-warning"
+						<strong><%= task.title %></strong> - <%= task.status %> <% if
+						(task.category) { %> (<%= categories.find((cat) => cat.id ===
+						task.category)?.name || "Uncategorized" %>) <% } else { %>
+						(Uncategorized) <% } %>
+					</div>
+					<div>
+						<a href="/tasks/<%= task.id %>/edit" class="btn btn-warning btn-sm"
 							>Edit</a
 						>
 						<form

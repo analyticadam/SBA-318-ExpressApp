@@ -54,10 +54,13 @@ h1 {
 	background-color: #007bff;
 	border-color: #007bff;
 	color: white;
+	font-weight: bold;
+	align-items: center;
 }
 
 .btn-primary:hover {
 	background-color: #0056b3;
+	border-color: #004085;
 }
 
 .btn-warning {
@@ -83,10 +86,20 @@ h1 {
 /* Add Task Button Styling */
 .add-task-btn {
 	display: block;
-	margin: 20px auto;
-	max-width: 150px;
-	font-size: 16px;
-	padding: 10px;
+	margin: 20px auto; /* Ensure it's centered with auto margins */
+	max-width: 200px; /* Adjust width for better visibility */
+	font-size: 16px; /* Standard font size for visibility */
+	padding: 10px 20px; /* Adequate padding for a clickable area */
+	background-color: #007bff; /* Consistent with the primary button color */
+	border: none; /* Remove border for a clean look */
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 5px; /* Rounded corners */
+}
+
+.add-task-btn:hover {
+	background-color: #0056b3; /* Darker shade on hover */
 }
 
 /* Footer Styling */

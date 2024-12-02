@@ -1,6 +1,7 @@
-const categories = [
-	{ id: 1, name: "Work" },
-	{ id: 2, name: "Personal" },
+module.exports = [
+	{ id: "cat1", name: "Work" },
+	{ id: "cat2", name: "Personal" },
+	{ id: "cat3", name: "Per Scholas Bootcamp" },
 ];
 
-module.exports = categories;
+//module.exports = categories;

@@ -59,13 +59,24 @@ app.get("/", (req, res) => {
 	console.log("GET / called"); // Log the route call
 
 	// Ensure tasks array is up to date
-	res.render("index", { tasks }); // Render the main page with the tasks array
+	res.render("index", { tasks, categories }); // Render the main page with the tasks array
+});
+// Call Users
+app.get("/users", (req, res) => {
+	console.log("GET /users called");
+	res.json(users);
+});
+
+// Get Categories
+app.get("/categories", (req, res) => {
+	console.log("GET /categories called");
+	res.json(categories);
 });
 
 // Route to render the Add Task form
 app.get("/tasks/add", (req, res) => {
 	console.log("GET /tasks/add called");
-	res.render("add-task");
+	res.render("add-task", { categories }); // Pass categories to EJS
 });
 
 // GET: Render All Tasks Page
@@ -89,63 +100,63 @@ app.get("/tasks/:id", (req, res) => {
 
 // POST: Create a new task
 app.post("/tasks", (req, res) => {
-	console.log("POST /tasks called");
-	const { title, description, status, dueDate } = req.body;
+	// Destructure the task fields from the request body
+	const { title, description, status, dueDate, category } = req.body;
 
+	// Validation: Ensure required fields (title and dueDate) are provided
 	if (!title || !dueDate) {
-		console.log("Validation failed: Missing required fields");
+		// If validation fails, respond with a 400 status and error message
 		return res.status(400).send("Title and Due Date are required.");
 	}
 
+	// Create a new task object with the provided data
 	const newTask = {
-		id: uuidv4(),
-		title,
-		description,
-		status: status || "Pending",
-		dueDate,
+		id: uuidv4(), // Generate a unique ID for the task
+		title, // Task title
+		description, // Task description (optional)
+		status: status || "Pending", // Default to "Pending" if no status is provided
+		dueDate, // Due date for the task
+		category: category || null, // Category for the task (optional, default to null)
 	};
+
+	// Add the new task to the tasks array
 	tasks.push(newTask);
+
+	// Save the updated tasks array to the file for persistence
 	saveData("tasks.js", tasks);
 
-	console.log("Task created:", newTask);
-	res.status(201).json({ message: "Task created successfully", task: newTask });
+	// Redirect the user to the homepage after successfully adding the task
+	res.redirect("/"); // Redirect to the home page where tasks are displayed
 });
 
 // PUT: Update an existing task by ID
 app.put("/tasks/:id", (req, res) => {
-	console.log("PUT /tasks/:id called with ID:", req.params.id); // Log the request
-
-	const { id } = req.params; // Extract task ID from the URL
-	const { title, description, status, dueDate } = req.body; // Extract fields to update
-
-	// Find the task to update
-	const task = tasks.find((task) => task.id == id);
+	const task = tasks.find((t) => t.id === req.params.id);
 
 	if (task) {
-		// Update fields if provided
-		task.title = title || task.title;
-		task.description = description || task.description;
-		task.status = status || task.status;
-		task.dueDate = dueDate || task.dueDate;
+		// Update fields
+		task.title = req.body.title || task.title;
+		task.description = req.body.description || task.description;
+		task.status = req.body.status || task.status;
+		task.dueDate = req.body.dueDate || task.dueDate;
+		task.category = req.body.category || null;
 
 		// Persist changes
 		saveData("tasks.js", tasks);
 
-		console.log("Task updated:", task); // Log updated task
-		res.json({ message: "Task updated successfully", task });
+		res.redirect("/");
 	} else {
-		console.log(`Task with ID ${id} not found.`); // Log missing task
-		res.status(404).json({ error: `Task with ID ${id} not found.` });
+		res.status(404).send("Task not found.");
 	}
 });
 
-// Route to render the Edit Task page
 app.get("/tasks/:id/edit", (req, res) => {
 	console.log("GET /tasks/:id/edit called with ID:", req.params.id); // Log the route call
-	const task = tasks.find((task) => task.id == req.params.id); // Find the task with the matching ID
+
+	const task = tasks.find((t) => t.id === req.params.id); // Find the task with the matching ID
 
 	if (task) {
-		res.render("edit-task", { task, error: null }); // Pass task data and error as null
+		res.render("edit-task", { task, categories, error: null }); // Pass task, categories, and error (set to null initially)
 	} else {
 		console.log(`Task with ID ${req.params.id} not found.`); // Log if no task is found
 		res.status(404).send("Task not found");
