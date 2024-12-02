@@ -21,34 +21,6 @@ module.exports = [
         "dueDate": "2024-12-01"
     },
     {
-        "id": "bf39d75b-3acd-441d-8ba1-a00fdcda48be",
-        "title": "New Task",
-        "description": "Task created via cURL",
-        "status": "Pending",
-        "dueDate": "2024-12-01"
-    },
-    {
-        "id": "45c875ef-c075-4781-8714-f245d8d8153a",
-        "title": "New Task",
-        "description": "Task created via cURL",
-        "status": "Pending",
-        "dueDate": "2024-12-01"
-    },
-    {
-        "id": "b8ae9c5e-372b-4156-b646-59777af2b1fb",
-        "title": "New Task",
-        "description": "Task created via cURL",
-        "status": "Pending",
-        "dueDate": "2024-12-01"
-    },
-    {
-        "id": "9cd56393-a593-440f-9d35-45959f0ba3fa",
-        "title": "New Task",
-        "description": "This is a test task",
-        "status": "Pending",
-        "dueDate": "2024-12-01"
-    },
-    {
         "id": "a6aac944-07cb-4a72-90b8-54bf530335ae",
         "title": "Homework",
         "description": "Lots of homework",
@@ -75,5 +47,12 @@ module.exports = [
         "description": "Apply for 5 jobs assignment for PD class",
         "status": "Pending",
         "dueDate": "2024-12-04"
+    },
+    {
+        "id": "acfe99c9-4731-496c-a001-4cb350601246",
+        "title": "Organize Office",
+        "description": "Clean and pick up office and organize",
+        "status": "Pending",
+        "dueDate": "2024-12-06"
     }
 ];

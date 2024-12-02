@@ -8,18 +8,40 @@ const app = express();
 const PORT = 3000;
 
 // Import data
-const tasks = require("./data/tasks");
+let tasks = require("./data/tasks");
 const users = require("./data/users");
 const categories = require("./data/categories");
 
 // Helper function to save data to a file
 const fs = require("fs");
 
+/**
+ * Function to save data to a specified file in the `data` directory.
+ *
+ * @param {string} filePath - The name of the file to save the data (e.g., "tasks.js").
+ * @param {Array|Object} data - The data to be saved (must be serializable to JSON).
+ */
 function saveData(filePath, data) {
-	fs.writeFileSync(
-		path.join(__dirname, "data", filePath),
-		`module.exports = ${JSON.stringify(data, null, 4)};`
-	);
+	const fs = require("fs"); // File system module for file operations
+	const path = require("path"); // Path module to handle file paths
+
+	try {
+		// Construct the full path to the file in the "data" directory
+		const fullPath = path.join(__dirname, "data", filePath);
+
+		// Convert the data to a JSON string with indentation for readability
+		// Wrap the data in a `module.exports` statement for compatibility with Node.js
+		const fileContent = `module.exports = ${JSON.stringify(data, null, 4)};`;
+
+		// Write the JSON string to the file, overwriting its contents
+		fs.writeFileSync(fullPath, fileContent);
+
+		// Log a success message for debugging
+		console.log(`Data saved successfully to ${filePath}`);
+	} catch (error) {
+		// Log any errors that occur during the file writing process
+		console.error(`Error saving data to ${filePath}:`, error.message);
+	}
 }
 
 // Middleware: Parse request bodies and serve static files
@@ -30,6 +52,14 @@ app.use(express.static(path.join(__dirname, "public")));
 // View Engine Setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+// Home route
+app.get("/", (req, res) => {
+	console.log("GET / called"); // Log the route call
+
+	// Ensure tasks array is up to date
+	res.render("index", { tasks }); // Render the main page with the tasks array
+});
 
 // Route to render the Add Task form
 app.get("/tasks/add", (req, res) => {
