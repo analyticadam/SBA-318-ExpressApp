@@ -1,10 +1,15 @@
-# Task Manager Application
+# Task Manager Application (SBA 318 - Express Application )
 
 A simple and intuitive Task Manager web application built using **Node.js**, **Express**, **EJS**, and **Bootstrap**. This application allows users to create, view, edit, and delete tasks efficiently.
 
 ---
 
-## Features
+## Features 🚅
+
+- 🚅 High-speed task management
+- 🌟 Responsive design with Bootstrap
+
+---
 
 - **Add Tasks**: Create new tasks with a title, description, status, and due date.
 - **View Tasks**: View all tasks in a clean, responsive interface.
@@ -23,105 +28,6 @@ A simple and intuitive Task Manager web application built using **Node.js**, **E
 - **JavaScript**: Frontend interactivity and form validation.
 
 ---
-
-## Installation and Setup
-
-### Prerequisites
-
-Ensure you have the following installed:
-
-- [Node.js](https://nodejs.org) (v14 or later)
-- [Git](https://git-scm.com)
-- [Visual Studio Code](https://code.visualstudio.com)
-
-### Installation Steps
-
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   Navigate to the project directory:
-   ```
-
-cd task-manager-app
-
-Install dependencies:
-
-npm install
-
-Start the server:
-
-nodemon app.js
-
-Open the application in your browser:
-
-    http://localhost:3000
-
-Visual Studio Code Setup
-Recommended Extensions
-
-    Prettier (Code Formatter): For consistent code formatting.
-        Install: Prettier - Code formatter
-
-    ESLint: To ensure code quality and detect potential issues.
-        Install: ESLint
-
-    Path Autocomplete: Helps with autocompletion for file paths.
-        Install: Path Autocomplete
-
-    Live Server: Useful for previewing static files like CSS and EJS during development.
-        Install: Live Server
-
-    Node.js Extension Pack: For Node.js and Express development.
-        Install: Node.js Extension Pack
-
-Debugging with VS Code
-
-    Open the project folder in VS Code:
-
-code .
-
-Configure the debugger:
-
-    Go to the Run and Debug view in VS Code (Ctrl+Shift+D or Command+Shift+D).
-    Click "Create a launch.json file."
-    Select Node.js as the environment.
-    Use the following configuration in the launch.json file:
-
-        {
-            "version": "0.2.0",
-            "configurations": [
-                {
-                    "type": "node",
-                    "request": "launch",
-                    "name": "Launch Program",
-                    "skipFiles": ["<node_internals>/**"],
-                    "program": "${workspaceFolder}/app.js"
-                }
-            ]
-        }
-
-    Start Debugging:
-        Set breakpoints in app.js or any other file by clicking next to the line numbers.
-        Press F5 or click the "Run" button to start debugging.
-
-File Structure
-
-project/
-├── data/
-│ ├── tasks.js # Stores task data
-│ ├── users.js # (Optional) Stores user data
-│ └── categories.js # (Optional) Stores task categories
-├── public/
-│ └── css/
-│ └── styles.css # Custom styles for the app
-├── views/
-│ ├── add-task.ejs # Page to add a new task
-│ ├── edit-task.ejs # Page to edit an existing task
-│ ├── index.ejs # Homepage showing all tasks
-│ └── tasks.ejs # View for all tasks
-├── app.js # Main server file
-├── package.json # Node.js dependencies
-└── README.md # Project documentation
 
 How to Use
 
