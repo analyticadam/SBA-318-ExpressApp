@@ -29,31 +29,26 @@ A simple and intuitive Task Manager web application built using **Node.js**, **E
 
 ---
 
-How to Use
+## How to Use
 
-    Add a Task:
-        Click the "Add Task" button on the homepage.
-        Fill out the task details and submit the form.
+- **Add a Task:**
+  Click the "Add Task" button on the homepage.
+  Fill out the task details and submit the form.
 
-    Edit a Task:
-        Click the "Edit" button next to a task.
-        Update the task details and save changes.
+- **Edit a Task:**
+  Click the "Edit" button next to a task.
+  Update the task details and save changes.
 
-    Delete a Task:
-        Click the "Delete" button next to a task.
-        Confirm deletion in the popup dialog.
+- **Delete a Task:**
+  Click the "Delete" button next to a task.
+  Confirm deletion in the popup dialog.
 
-    View All Tasks:
-        Navigate to /tasks to see a list of all tasks.
+- **View All Tasks:**
+  Navigate to /tasks to see a list of all tasks.
 
-Screenshots
-Homepage
+## Future Enhancements
 
-Edit Task Page
-
-Future Enhancements
-
-    Authentication: Add user login and registration.
-    Task Categories: Allow tasks to be grouped by categories.
-    Search and Filters: Enable searching and filtering tasks by status or due date.
-    API Integration: Create a RESTful API for external integrations.
+- **Authentication:** Add user login and registration.
+- **Task Categories:** Allow tasks to be grouped by categories.
+- **Search and Filters:**: Enable searching and filtering tasks by status or due date.
+- **API Integration:**: :\*\* Create a RESTful API for external integrations.
