@@ -1,19 +1,5 @@
 module.exports = [
     {
-        "id": 1,
-        "title": "Sample Task",
-        "description": "This is a sample sample task.",
-        "status": "Pending",
-        "dueDate": "2024-12-01"
-    },
-    {
-        "id": "1ea6216d-a783-4f14-962d-484cf29977db",
-        "title": "Graduate from Per Scholas",
-        "description": "Graduate",
-        "status": "Pending",
-        "dueDate": "2025-01-24"
-    },
-    {
         "id": "397e06a6-ef77-4dd5-8fc4-08ce0ce499c3",
         "title": "Updated Title",
         "description": "Updated Description",

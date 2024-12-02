@@ -68,10 +68,10 @@ app.get("/tasks/add", (req, res) => {
 	res.render("add-task");
 });
 
-// GET: Retrieve all tasks
+// GET: Render All Tasks Page
 app.get("/tasks", (req, res) => {
-	console.log("GET /tasks called");
-	res.json(tasks);
+	console.log("GET /tasks called"); // Log the route call
+	res.render("tasks", { tasks }); // Render the tasks.ejs template and pass the tasks array
 });
 
 // GET: Fetch details of a specific task by ID

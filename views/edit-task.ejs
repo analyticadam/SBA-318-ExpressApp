@@ -3,39 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
         rel="stylesheet"
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRUPNfO9kV+2cxrN2D7K9hG8GA5r3ERLPB8N1LlA"
         crossorigin="anonymous"
     />
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/public/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <title>Edit Task</title>
 </head>
-<body class="bg-light">
-    <!-- Page Header -->
-    <div class="container my-4">
-        <h1 class="text-center">Edit Task</h1>
-    </div>
-
-    <!-- Display Error Message (if any) -->
-    <% if (error) { %>
-        <div class="container">
-            <div class="alert alert-danger">
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Edit Task</h1>
+        <!-- Display Error Message (if any) -->
+        <% if (error) { %>
+            <div class="alert alert-danger" role="alert">
                 <%= error %>
             </div>
-        </div>
-    <% } %>    
-
-    <!-- Task Edit Form -->
-    <div class="container">
-        <form action="/tasks/<%= task.id %>?_method=PUT" method="POST">
-
+        <% } %>
+        <!-- Task Edit Form -->
+        <form action="/tasks/<%= task.id %>?_method=PUT" method="POST" class="mx-auto" style="max-width: 600px;">
             <!-- Task Title -->
             <div class="mb-3">
-                <label for="title" class="form-label">Title:</label>
+                <label for="title" class="form-label">Title</label>
                 <input
                     type="text"
                     id="title"
@@ -45,34 +35,29 @@
                     required
                     minlength="3"
                     maxlength="100"
-                    placeholder="Enter task title"
                 />
             </div>
-
             <!-- Task Description -->
             <div class="mb-3">
-                <label for="description" class="form-label">Description:</label>
+                <label for="description" class="form-label">Description</label>
                 <textarea
                     id="description"
                     name="description"
                     class="form-control"
                     rows="4"
-                    required
                 ><%= task.description %></textarea>
             </div>
-
             <!-- Task Status -->
             <div class="mb-3">
-                <label for="status" class="form-label">Status:</label>
+                <label for="status" class="form-label">Status</label>
                 <select id="status" name="status" class="form-select">
                     <option value="Pending" <%= task.status === "Pending" ? "selected" : "" %>>Pending</option>
                     <option value="Completed" <%= task.status === "Completed" ? "selected" : "" %>>Completed</option>
                 </select>
             </div>
-
             <!-- Task Due Date -->
             <div class="mb-3">
-                <label for="dueDate" class="form-label">Due Date:</label>
+                <label for="dueDate" class="form-label">Due Date</label>
                 <input
                     type="date"
                     id="dueDate"
@@ -82,20 +67,12 @@
                     required
                 />
             </div>
-
-            <!-- Action Buttons -->
-            <div class="text-center">
+            <!-- Form Buttons -->
+            <div class="d-flex justify-content-between">
                 <button type="submit" class="btn btn-success">Save Changes</button>
                 <a href="/" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>
-
-    <!-- Bootstrap JavaScript (Optional, for interactive components) -->
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AhrC0tqD1Qo7H9kRwjbZK6gBRgFGz7hFxg6XZ4emvACpHlkk6jCWvzp+8K8c1"
-        crossorigin="anonymous"
-    ></script>
 </body>
 </html>

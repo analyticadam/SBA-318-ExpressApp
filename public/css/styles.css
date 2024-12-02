@@ -1,0 +1,139 @@
+/* General Body Styling */
+body {
+	background-color: #f8f9fa; /* Very light gray */
+	font-family: "Arial", sans-serif;
+	padding-top: 20px;
+	color: #343a40; /* Dark gray text */
+}
+
+/* Header Styling */
+h1 {
+	color: #0056b3; /* Calm blue */
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 30px;
+}
+
+/* Task List Styling */
+.list-group {
+	max-width: 600px; /* Limit width for a compact layout */
+	margin: 0 auto; /* Center horizontally */
+	padding: 0;
+	list-style: none;
+}
+
+.list-group-item {
+	background-color: #ffffff; /* White background */
+	color: #343a40; /* Dark text */
+	font-size: 18px;
+	font-weight: 500;
+	border: 1px solid #ddd; /* Subtle gray border */
+	border-radius: 5px;
+	margin-bottom: 10px;
+	padding: 15px;
+	display: flex;
+	justify-content: space-between; /* Space between task title and buttons */
+	align-items: center;
+	transition: transform 0.2s ease;
+}
+
+.list-group-item:hover {
+	transform: scale(1.02); /* Slight hover effect */
+	background-color: #f1f1f1; /* Slightly darker background on hover */
+}
+
+/* Button Styling */
+.btn {
+	font-size: 14px;
+	padding: 5px 10px;
+	border-radius: 5px;
+	margin-left: 5px; /* Add spacing between buttons */
+}
+
+.btn-primary {
+	background-color: #007bff;
+	border-color: #007bff;
+	color: white;
+}
+
+.btn-primary:hover {
+	background-color: #0056b3;
+}
+
+.btn-warning {
+	background-color: #ffc107;
+	border-color: #ffc107;
+	color: #212529;
+}
+
+.btn-warning:hover {
+	background-color: #e0a800;
+}
+
+.btn-danger {
+	background-color: #dc3545;
+	border-color: #dc3545;
+	color: white;
+}
+
+.btn-danger:hover {
+	background-color: #b02a37;
+}
+
+/* Add Task Button Styling */
+.add-task-btn {
+	display: block;
+	margin: 20px auto;
+	max-width: 150px;
+	font-size: 16px;
+	padding: 10px;
+}
+
+/* Footer Styling */
+footer {
+	text-align: center;
+	margin-top: 20px;
+	font-size: 14px;
+	color: #6c757d;
+}
+
+/* Form Inputs */
+input[type="text"],
+textarea,
+select,
+input[type="date"] {
+	border: 1px solid #ccc; /* Light gray border */
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 10px;
+	font-size: 16px;
+	width: 100%;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+	border-color: #0056b3; /* Blue border on focus */
+	box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+}
+
+/* Buttons */
+.btn-success {
+	background-color: #28a745;
+	border-color: #28a745;
+	color: #ffffff;
+}
+
+.btn-success:hover {
+	background-color: #218838;
+}
+
+.btn-secondary {
+	background-color: #6c757d;
+	border-color: #6c757d;
+	color: #ffffff;
+}
+
+.btn-secondary:hover {
+	background-color: #5a6268;
+}
