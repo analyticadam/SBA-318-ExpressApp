@@ -1,6 +1,6 @@
 const users = [
-	{ id: 1, name: "John Doe" },
-	{ id: 2, name: "Jane Smith" },
+	{ id: 1, name: "Adam" },
+	{ id: 2, name: "Guest" },
 ];
 
 module.exports = users;

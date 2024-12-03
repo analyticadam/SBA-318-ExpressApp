@@ -85,6 +85,16 @@
     </select>
 </div>
 
+            <!-- Users Category -->
+<label for="user">Assign to User:</label>
+<select id="user" name="user" class="form-select">
+    <% users.forEach((user) => { %>
+        <option value="<%= user.id %>" <%= task.user === user.id ? "selected" : "" %>>
+            <%= user.name %>
+        </option>
+    <% }) %>
+</select>
+
 
             <!-- Form Buttons -->
             <div class="d-flex justify-content-between">

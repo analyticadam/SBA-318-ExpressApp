@@ -13,44 +13,40 @@
 		<title>Add Task</title>
 	</head>
 	<body>
-		<div class="container mt-5">
-			<h1 class="text-center mb-4">Add a New Task</h1>
+		<div class="container mt-4">
+			<!-- Page Title -->
+			<h1 class="text-primary text-center mb-4">Add a New Task</h1>
 
-			<!-- Task Add Form -->
-			<form
-				action="/tasks"
-				method="POST"
-				class="mx-auto"
-				style="max-width: 600px"
-			>
+			<!-- Form for Adding a New Task -->
+			<form action="/tasks" method="POST">
 				<!-- Task Title -->
 				<div class="mb-3">
-					<label for="title" class="form-label">Title</label>
+					<label for="title" class="form-label">Title:</label>
 					<input
 						type="text"
 						id="title"
 						name="title"
 						class="form-control"
-						placeholder="Enter task title"
 						required
+						minlength="3"
+						maxlength="100"
 					/>
 				</div>
 
 				<!-- Task Description -->
 				<div class="mb-3">
-					<label for="description" class="form-label">Description</label>
+					<label for="description" class="form-label">Description:</label>
 					<textarea
 						id="description"
 						name="description"
 						class="form-control"
 						rows="4"
-						placeholder="Enter task description"
 					></textarea>
 				</div>
 
 				<!-- Task Status -->
 				<div class="mb-3">
-					<label for="status" class="form-label">Status</label>
+					<label for="status" class="form-label">Status:</label>
 					<select id="status" name="status" class="form-select">
 						<option value="Pending" selected>Pending</option>
 						<option value="Completed">Completed</option>
@@ -59,7 +55,7 @@
 
 				<!-- Task Due Date -->
 				<div class="mb-3">
-					<label for="dueDate" class="form-label">Due Date</label>
+					<label for="dueDate" class="form-label">Due Date:</label>
 					<input
 						type="date"
 						id="dueDate"
@@ -71,19 +67,30 @@
 
 				<!-- Task Category -->
 				<div class="mb-3">
-					<label for="category" class="form-label">Category</label>
+					<label for="category" class="form-label">Category:</label>
 					<select id="category" name="category" class="form-select">
+						<option value="">Select a Category</option>
 						<% categories.forEach((category) => { %>
 						<option value="<%= category.id %>"><%= category.name %></option>
 						<% }) %>
 					</select>
 				</div>
 
-				<!-- Form Buttons -->
-				<div class="text-center">
-					<button type="submit" class="btn btn-primary">Add Task</button>
-					<a href="/" class="btn btn-secondary">Cancel</a>
+				<!-- Assign Task to a User -->
+				<div class="mb-3">
+					<label for="user" class="form-label">Assign to User:</label>
+					<select id="user" name="user" class="form-select">
+						<option value="">Unassigned</option>
+						<% users.forEach((user) => { %>
+						<option value="<%= user.id %>"><%= user.name %></option>
+						<% }) %>
+					</select>
 				</div>
+
+				<!-- Submit Button -->
+				<button type="submit" class="btn btn-primary btn-lg w-100">
+					Add Task
+				</button>
 			</form>
 		</div>
 	</body>

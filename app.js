@@ -59,8 +59,9 @@ app.get("/", (req, res) => {
 	console.log("GET / called"); // Log the route call
 
 	// Ensure tasks array is up to date
-	res.render("index", { tasks, categories }); // Render the main page with the tasks array
+	res.render("index", { tasks, categories, users }); // Render the main page with the tasks array
 });
+
 // Call Users
 app.get("/users", (req, res) => {
 	console.log("GET /users called");
@@ -76,7 +77,7 @@ app.get("/categories", (req, res) => {
 // Route to render the Add Task form
 app.get("/tasks/add", (req, res) => {
 	console.log("GET /tasks/add called");
-	res.render("add-task", { categories }); // Pass categories to EJS
+	res.render("add-task", { categories, users }); // Pass categories to EJS
 });
 
 // GET: Render All Tasks Page
@@ -101,7 +102,7 @@ app.get("/tasks/:id", (req, res) => {
 // POST: Create a new task
 app.post("/tasks", (req, res) => {
 	// Destructure the task fields from the request body
-	const { title, description, status, dueDate, category } = req.body;
+	const { title, description, status, dueDate, category, user } = req.body;
 
 	// Validation: Ensure required fields (title and dueDate) are provided
 	if (!title || !dueDate) {
@@ -115,6 +116,7 @@ app.post("/tasks", (req, res) => {
 		title, // Task title
 		description, // Task description (optional)
 		status: status || "Pending", // Default to "Pending" if no status is provided
+		user: user || null, // Save the user ID or null if not provided
 		dueDate, // Due date for the task
 		category: category || null, // Category for the task (optional, default to null)
 	};
@@ -140,6 +142,7 @@ app.put("/tasks/:id", (req, res) => {
 		task.status = req.body.status || task.status;
 		task.dueDate = req.body.dueDate || task.dueDate;
 		task.category = req.body.category || null;
+		task.user = req.body.user || task.user;
 
 		// Persist changes
 		saveData("tasks.js", tasks);
@@ -150,13 +153,16 @@ app.put("/tasks/:id", (req, res) => {
 	}
 });
 
+// Route to render the Edit Task page
 app.get("/tasks/:id/edit", (req, res) => {
 	console.log("GET /tasks/:id/edit called with ID:", req.params.id); // Log the route call
 
-	const task = tasks.find((t) => t.id === req.params.id); // Find the task with the matching ID
+	// Find the task with the matching ID
+	const task = tasks.find((t) => t.id === req.params.id);
 
 	if (task) {
-		res.render("edit-task", { task, categories, error: null }); // Pass task, categories, and error (set to null initially)
+		// Pass the task, categories, and users arrays to the EJS template
+		res.render("edit-task", { task, categories, users, error: null });
 	} else {
 		console.log(`Task with ID ${req.params.id} not found.`); // Log if no task is found
 		res.status(404).send("Task not found");
